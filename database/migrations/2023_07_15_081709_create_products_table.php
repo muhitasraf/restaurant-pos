@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->foreignId('category_id')->constrained('category');
+            $table->foreignId('category_id')->constrained('categories');
             $table->float('price')->nullable();
             $table->integer('status')->comment('0=Inactive, 1=Active');
             $table->foreignId('user_id')->constrained('users');

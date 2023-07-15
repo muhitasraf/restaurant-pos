@@ -38,17 +38,10 @@
                     <!-- Layout -->
 
                     <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>User</span></a>
+                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Category</span></a>
                         <ul class="nav-group-sub collapse">
-                            <li class="nav-item"><a href="/user" class="nav-item nav-link">List</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Report</span></a>
-                        <ul class="nav-group-sub collapse">
-                            <li class="nav-item"><a href="/monthly_purchase" class="nav-item nav-link">Monthly Purchase</a></li>
-                            <li class="nav-item"><a href="/monthly_sales" class="nav-item nav-link">Monthly Sales</a></li>
+                            <li class="nav-item"><a href="{{ URL('category/create') }}" class="nav-item nav-link">Create</a></li>
+                            <li class="nav-item"><a href="{{ URL('categories') }}" class="nav-item nav-link">List</a></li>
                         </ul>
                     </li>
                     <!-- /layout -->
