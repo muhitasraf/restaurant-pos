@@ -44,6 +44,14 @@
                             <li class="nav-item"><a href="{{ URL('categories') }}" class="nav-item nav-link">List</a></li>
                         </ul>
                     </li>
+
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Product</span></a>
+                        <ul class="nav-group-sub collapse">
+                            <li class="nav-item"><a href="{{ URL('product/create') }}" class="nav-item nav-link">Create</a></li>
+                            <li class="nav-item"><a href="{{ URL('product') }}" class="nav-item nav-link">List</a></li>
+                        </ul>
+                    </li>
                     <!-- /layout -->
 
                 </ul>
