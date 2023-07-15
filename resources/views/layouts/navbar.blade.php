@@ -8,7 +8,7 @@
 
         <div class="navbar-brand">
             <router-link to="/" class="d-inline-flex align-items-center">
-                <img src="/global_assets/images/demo/logos/3.svg" alt="">
+                <img src="/global_assets/images/logo_text.svg" alt="">
             </router-link>
         </div>
 
