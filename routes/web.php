@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +41,15 @@ Route::post("/table/store", [TableController::class, 'store']);
 Route::get("/table/edit/{id}", [TableController::class, 'edit']);
 Route::put("/table/update/{id}", [TableController::class, 'update']);
 Route::get("/table/delete/{id}", [TableController::class, 'destroy']);
+
+Route::get("/sales", [SalesController::class, 'index']);
+Route::get("/sales/create", [SalesController::class, 'create']);
+Route::post("/sales/store", [SalesController::class, 'store']);
+Route::get("/sales/edit/{id}", [SalesController::class, 'edit']);
+Route::put("/sales/update/{id}", [SalesController::class, 'update']);
+Route::get("/sales/delete/{id}", [SalesController::class, 'destroy']);
+
+Route::get("/product_from_cart", [SalesController::class, 'product_from_cart']);
+Route::post("/add_to_cart", [SalesController::class, 'add_to_cart']);
+Route::post("/delete_from_cart", [SalesController::class, 'delete_from_cart']);
+Route::post("/cancle_order", [SalesController::class, 'cancle_order']);
