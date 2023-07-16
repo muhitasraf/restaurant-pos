@@ -52,6 +52,22 @@
                             <li class="nav-item"><a href="{{ URL('product') }}" class="nav-item nav-link">List</a></li>
                         </ul>
                     </li>
+
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Table</span></a>
+                        <ul class="nav-group-sub collapse">
+                            <li class="nav-item"><a href="{{ URL('table/create') }}" class="nav-item nav-link">Create</a></li>
+                            <li class="nav-item"><a href="{{ URL('tables') }}" class="nav-item nav-link">List</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Sales</span></a>
+                        <ul class="nav-group-sub collapse">
+                            <li class="nav-item"><a href="{{ URL('sales/create') }}" class="nav-item nav-link">Create</a></li>
+                            <li class="nav-item"><a href="{{ URL('sales') }}" class="nav-item nav-link">List</a></li>
+                        </ul>
+                    </li>
                     <!-- /layout -->
 
                 </ul>

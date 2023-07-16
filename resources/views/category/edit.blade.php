@@ -13,6 +13,9 @@
                 <a class="btn btn-success" href="{{ URL('/categories') }}">
                     <i class="fa fa-list" aria-hidden="true"></i> Category
                 </a>
+                <a class="btn btn-success" href="{{ URL('/category/create') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Category
+                </a>
             </div>
         </div>
         <!-- DataTales Example -->

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +31,12 @@ Route::get("/product", [ProductController::class, 'index']);
 Route::get("/product/create", [ProductController::class, 'create']);
 Route::post("/product/store", [ProductController::class, 'store']);
 Route::get("/product/edit/{id}", [ProductController::class, 'edit']);
-Route::post("/product/update/{id}", [ProductController::class, 'update']);
-Route::post("/product/delete/{id}", [ProductController::class, 'destroy']);
+Route::put("/product/update/{id}", [ProductController::class, 'update']);
+Route::get("/product/delete/{id}", [ProductController::class, 'destroy']);
+
+Route::get("/tables", [TableController::class, 'index']);
+Route::get("/table/create", [TableController::class, 'create']);
+Route::post("/table/store", [TableController::class, 'store']);
+Route::get("/table/edit/{id}", [TableController::class, 'edit']);
+Route::put("/table/update/{id}", [TableController::class, 'update']);
+Route::get("/table/delete/{id}", [TableController::class, 'destroy']);
