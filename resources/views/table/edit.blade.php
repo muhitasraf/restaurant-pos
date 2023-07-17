@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <div class="row my-2">
-            <div class="col-sm-2">
+            <div class="col-sm-12 col-md-6 col-lg-4">
                 <a class="btn btn-success" href="{{ URL('/tables') }}">
                     <i class="fa fa-list" aria-hidden="true"></i> Table List
                 </a>
@@ -26,7 +26,8 @@
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label for="table">Table Name</label>
-                            <input type="text" class="form-control form-control-user" name="table" placeholder="Table Name" required="required" value="{{ $table->table }}">
+                            <input type="text" class="form-control form-control-user" name="table"
+                                placeholder="Table Name" required="required" value="{{ $table->table }}">
                             <span></span>
                             <button class="btn btn-success my-2">UPDATE</button>
                         </div>
@@ -36,33 +37,5 @@
         </div>
 
     </div>
-
-    <script type="text/javascript">
-        function checkEmailAddressAvailability() {
-            var email = $("#email_address").val();
-
-            if (email_address != '') {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ url('/user_availability') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        email: email
-                    },
-                    success: function(data) {
-                        if (data.length > 0) {
-                            $("#email_emessage").css('display', 'block');
-                            $("#email_address").val('');
-                            $("#submit_btn").attr('disabled', 'disabled');
-                        } else {
-                            $("#email_emessage").css('display', 'none');
-                            $("#submit_btn").attr('disabled', false);
-
-                            $("#confirm_password").blur();
-                        }
-                    }
-                });
-            }
-        }
-    </script>
+    
 @endsection

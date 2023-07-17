@@ -13,12 +13,12 @@ use Illuminate\Support\Str;
 
 class SalesController extends Controller
 {
-    public function pendingSellList(){
+    public function index(){
         $title = 'Pending Sale List';
 
         $u_id = 0;
-        $user_id = auth()->user()->id;
-        $parent_id = auth()->user()->parent_id;
+        $user_id = 1;//auth()->user()->id;
+        $parent_id = 1;//auth()->user()->parent_id;
 
         if($parent_id == 0){
             $u_id = $user_id;
@@ -30,20 +30,21 @@ class SalesController extends Controller
                         ->leftJoin('customers', 'sales_summary.customer_id', '=', 'customers.id')
                         ->leftJoin('tables', 'sales_summary.table_id', '=', 'tables.id')
                         ->select('sales_summary.*', 'customers.customer_code', 'tables.table')
-                        ->where('sales_summary.status', '=', 0);
+                        ->where('sales_summary.status', '=', 0)
+                        ->where('sales_summary.user_id', '=', $u_id);
 
-        switch (auth()->user()->access_level) {
-            case 1:
-                $pending_list_query->where('sales_summary.user_id', '=', $u_id);
-                break;
-            case 2:
-                $pending_list_query->where('sales_summary.sold_by', '=', $user_id);
-                break;
-            }
+        // switch (auth()->user()->access_level) {
+        //     case 1:
+        //         $pending_list_query->where('sales_summary.user_id', '=', $u_id);
+        //         break;
+        //     case 2:
+        //         $pending_list_query->where('sales_summary.sold_by', '=', $user_id);
+        //         break;
+        //     }
 
         $pending_list = $pending_list_query->get();
 
-        return view('pending_sale_list', ['title'=>$title, 'pending_list'=>$pending_list]);
+        return view('sales.index', ['title'=>$title, 'pending_list'=>$pending_list]);
     }
 
     public function create(){

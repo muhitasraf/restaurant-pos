@@ -26,12 +26,14 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->status = $request->status;
-        $category->user_id = 1;//auth()->user()->id;
-        $category->save();
+        $category->user_id = auth()->user()->id;
+        $result = $category->save();
 
-        Session::put('success_message', 'Successfully Saved!');
-
-        return redirect('/categories');
+        if($result){
+            return redirect('/categories')->with('success','Successfully Saved!');
+        }else{
+            return redirect()->back()->with('error','Something went wrong!');
+        }
     }
 
     public function edit($id){
@@ -46,17 +48,24 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->status = $request->status;
-        $category->save();
+        $result = $category->save();
 
-        Session::put('success_message', 'Successfully Updated!');
-
-        return redirect('/categories');
+        if($result){
+            return redirect('/categories')->with('success','Successfully Updated!');
+        }else{
+            return redirect()->back()->with('error','Something went wrong!');
+        }
     }
 
 
     public function destroy($id){
         $sales = Category::find($id);
-        $sales->delete();
-        return redirect('/categories');
+        $result = $sales->delete();
+
+        if($result){
+            return redirect('/categories')->with('success','Successfully Deleted!');
+        }else{
+            return redirect()->back()->with('error','Something went wrong!');
+        }
     }
 }

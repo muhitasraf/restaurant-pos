@@ -9,7 +9,7 @@
     <div class="container-fluid">
 
         <div class="row my-2">
-            <div class="col-sm-2">
+            <div class="col-sm-12 col-md-12">
                 <a class="btn btn-success" href="{{ URL('/categories') }}">
                     <i class="fa fa-list" aria-hidden="true"></i> Category
                 </a>
@@ -57,6 +57,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 @endsection

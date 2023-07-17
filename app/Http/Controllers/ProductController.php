@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use PDOException;
 
 class ProductController extends Controller
 {
@@ -24,6 +26,14 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
+        $regex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
+
+        $this->validate($request, [
+            'name' => 'required',
+            'category' => 'required',
+            'price' => array('required','regex:'.$regex),
+            'status' => 'required',
+        ]);
         $product = new Product();
 
         $product->name = $request->name;
@@ -31,12 +41,14 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->price = $request->price;
         $product->status = $request->status;
-        $product->user_id = 1;//auth()->user()->id;
-        $product->save();
+        $product->user_id = auth()->user()->id;
+        $result = $product->save();
 
-        Session::put('success_message', 'Successfully Saved!');
-
-        return redirect('product');
+        if($result){
+            return redirect('/product')->with('success','Successfully Created!');
+        }else{
+            return redirect()->back()->with('error','Something went wrong!');
+        }
     }
 
     public function edit($id){
@@ -58,22 +70,28 @@ class ProductController extends Controller
 
         $product = Product::find($id);
 
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->category_id = $request->category;
-        $product->price = $request->price;
-        $product->status = $request->status;
-        $product->save();
+        try{
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->category_id = $request->category;
+            $product->price = $request->price;
+            $product->status = $request->status;
+            $product->save();
+            return redirect('/product')->with('success','Successfully Updated!');
+        }catch(PDOException $e){
+            return redirect()->back()->with('error',"Soething went wrong!");
+        }
 
-        Session::put('success_message', 'Successfully Updated!');
-
-        return redirect('/product');
     }
 
 
     public function destroy($id){
         $sales = Product::find($id);
-        $sales->delete();
-        return redirect('/categories');
+        $result = $sales->delete();
+        if($result){
+            return redirect('/product')->with('success','Successfully Created!');
+        }else{
+            return redirect()->back()->with('error','Something went wrong!');
+        }
     }
 }

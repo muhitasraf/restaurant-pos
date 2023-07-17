@@ -4,7 +4,13 @@
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
+        <div class="row">
+            <div class="col-sm-10 my-2">
+                <a class="btn btn-success" href="{{ url('/sales') }}">
+                    <i class="fa fa-money-check-alt" aria-hidden="true"></i> Sales List
+                </a>
+            </div>
+        </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header h4">
@@ -12,49 +18,58 @@
             </div>
 
             <div class="card-body">
-                <div class="form-group row mb-4">
-                    <div class="col-sm-2 mb-3 mb-sm-0">
-                        <label>Customer Name</label>
-                        <input class="form-control" name="customer_name" id="customer_name" placeholder="Customer Name">
+                <div class="row mb-4">
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="form-group">
+                            <label>Customer Name</label>
+                            <input class="form-control" name="customer_name" id="customer_name" placeholder="Customer Name">
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mb-sm-0">
-                        <label>Customer Code</label>
-                        <input class="form-control" value="{{ $customer_code }}" name="customer_code" id="customer_code">
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="form-group">
+                            <label>Customer Code</label>
+                            <input class="form-control" value="{{ $customer_code }}" name="customer_code" id="customer_code">
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mb-sm-0">
-                        <label>Sale Type <span style="color: red;">*</span></label>
-                        <select class="form-control" id="sale_type" name="sale_type" required="required">
-                            <option value="">Sale Type</option>
-                            <option value="0">Restaurant</option>
-                            <option value="1">Online</option>
-                        </select>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="form-group">
+                            <label>Sale Type <span style="color: red;">*</span></label>
+                            <select class="form-control" id="sale_type" name="sale_type" required="required">
+                                <option value="">Sale Type</option>
+                                <option value="0">Restaurant</option>
+                                <option value="1">Online</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mb-sm-0">
-                        <label>Table </label>
-                        <select class="form-control" id="table_no" name=table_no>
-                            <option value="">Select Table</option>
-                            @foreach($tables as $t)
-                                <option value="{{ $t->id }}">{{ $t->table }}</option>
-                            @endforeach
-                        </select>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="form-group mb-2">
+                            <label>Table </label>
+                            <select class="form-control" id="table_no" name=table_no>
+                                <option value="">Select Table</option>
+                                @foreach($tables as $t)
+                                    <option value="{{ $t->id }}">{{ $t->table }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-sm-2 mb-3 mb-sm-0">
-                        <label>Payment Type</label>
-                        <select class="form-control select2" id="payment_type" name="payment_type">
-                            <option value="">Payment Type</option>
-                            <option value="0">Cash</option>
-                            <option value="1">Mobile Banking</option>
-                            <option value="2">Card</option>
-                        </select>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="form-group mb-2">
+                            <label>Payment Type</label>
+                            <select class="form-control select2" id="payment_type" name="payment_type">
+                                <option value="">Payment Type</option>
+                                <option value="0">Cash</option>
+                                <option value="1">Mobile Banking</option>
+                                <option value="2">Card</option>
+                            </select>
+                        </div>
                     </div>
-
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6">
 
-                        <div class="user-cart">
-                            <div class="card">
+                        <div class="card">
+                            <div class="table-responsive">
                                 <table class="table table-striped cart_table">
                                     <thead>
                                         <tr>
@@ -69,10 +84,9 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td><b>Total</b></td>
-                                            <td></td>
-                                            <td><input type="text" style="max-width: 80px;" class="form-control total_quantity" id="total_quantity" readonly></td>
-                                            <td><input type="text" style="max-width: 150px;" class="form-control grand_total" id="grand_total" readonly></td>
+                                            <td colspan="2"><b>Total</b></td>
+                                            <td><input type="text" style="max-width: 70px;min-width: 70px;" class="form-control total_quantity" id="total_quantity" readonly></td>
+                                            <td><input type="text" style="min-width: 130px;" class="form-control grand_total" id="grand_total" readonly></td>
                                         </tr>
                                         <tr>
                                             <td><b>Discount:</b></td>
@@ -86,32 +100,30 @@
                         </div>
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md-12 col-sm-12 col-lg-12">
                                 <button type="button" class="btn btn-danger btn-block" onclick="cancleOrder()">
                                     Cancel Order
                                 </button>
-                            </div>
-                            <div class="col text-end">
                                 <button type="submit" class="btn btn-success" onclick="saveSaleProduct()">SAVE ORDER</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-8">
-                        <div class="mb-2">
-                            <input type="text" class="form-control search_product" placeholder="Search Product...">
-                        </div>
-                        <div class="order-product">
-                            <div class="row">
+                    <div class="col-md-6">
+                        <div class="card p-3">
+                            <div class="row col-md-12">
+                                <input type="text" class="form-control search_product" placeholder="Search Product...">
+                            </div>
+                            <div class="row col-md-12 mt-2">
                                 @foreach($products as $p)
-                                <div class="col-sm-2" onclick="productAdd('{{ $p->id }}',1)">
-                                    <div class="card cart_card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $p->name }}</h5>
-                                            <img src="{{asset('global_assets/images/foods.png')}}" height="100px" width="100px" alt="">
-                                            <p class="card-text text-center">Tk {{ $p->price }}</p>
+                                    <div class="col-sm-6 col-md-4" onclick="productAdd('{{ $p->id }}',1)">
+                                        <div class="card cart_card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $p->name }}</h5>
+                                                <img src="{{asset('global_assets/images/foods.png')}}" height="100px" width="100px" alt="">
+                                                <p class="card-text text-center">Tk {{ $p->price }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endforeach
                             </div>
                         </div>

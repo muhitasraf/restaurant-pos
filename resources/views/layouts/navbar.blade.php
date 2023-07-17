@@ -57,7 +57,7 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a href="" @click="logout" class="dropdown-item">Logout</a>
+                    <a href="{{URL('/logout')}}" class="dropdown-item">Logout</a>
                 </div>
             </li>
         </ul>

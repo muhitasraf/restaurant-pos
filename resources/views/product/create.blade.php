@@ -3,7 +3,13 @@
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
+        <div class="row my-2">
+            <div class="col-sm-4">
+                <a class="btn btn-success" href="{{ URL('/product') }}">
+                    <i class="fa fa-list mx-1" aria-hidden="true"></i> Product List
+                </a>
+            </div>
+        </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header h4">
@@ -40,6 +46,15 @@
                                 <option value="0">Inactive</option>
                             </select>
                             <span></span>
+                            @if ($errors->any())
+                                <div class="alert alert-danger mt-2">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row">

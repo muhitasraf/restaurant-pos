@@ -17,10 +17,10 @@
 </div>
 <script>
 
-    $(document).ready(function onDocumentReady() {
+    $(document).ready(function() {
+        //---------------Initialize Date picker-------------------
         toastr.options = {
             "closeButton": true,
-            "debug": false,
             "newestOnTop": false,
             "progressBar": true,
             "positionClass": "toast-top-right",
@@ -34,17 +34,38 @@
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
-        }
+        };
+
+        @if (Session::has('info'))
+            toastr.info("{{Session('info')}}");
+        @endif
+
+        @if (Session::has('success'))
+            toastr.success("{{Session('success')}}");
+        @endif
+
+        @if (Session::has('error'))
+            toastr.error("{{Session('error')}}");
+        @endif
+
+        @if (Session::has('warning'))
+            toastr.warning("{{Session('warning')}}");
+        @endif
+
+        //---------------Initialize Date picker-------------------
+        var startDate = new Date();
+        $('.from_month').datepicker({
+            autoclose: true,
+            minViewMode: 1,
+            format: 'mm'
+        }).on('changeDate', function(selected){
+            startDate = new Date(selected.date.valueOf());
+            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+            $('.to').datepicker('setStartDate', startDate);
+        });
+
+        //-------------Initialize Datatable---------------------
+        // $('#dataTable').DataTable();
     });
-    var startDate = new Date();
-    $('.from_month').datepicker({
-        autoclose: true,
-        minViewMode: 1,
-        format: 'mm'
-    }).on('changeDate', function(selected){
-        startDate = new Date(selected.date.valueOf());
-        startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-        $('.to').datepicker('setStartDate', startDate);
-    });
-    // $('#dataTable').DataTable();
+
 </script>

@@ -12,6 +12,7 @@
             <div class="card-body">
                 <form action="{{ url('/product/update/'.$product->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <label for="name">Product Name</label>
@@ -40,10 +41,20 @@
                                 <option value="0" @if($product->status == 0) selected="selected" @endif>Inactive</option>
                             </select>
                             <span></span>
+                            @if ($errors->any())
+                                <div class="alert alert-danger mt-2">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <div class="col-sm-6 my-3 mb-sm-0">
+                        <div class="col-sm-12 col-md-12 my-2">
                             <button class="btn btn-success">Update</button>
                         </div>
                     </div>
