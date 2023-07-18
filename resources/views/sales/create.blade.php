@@ -28,7 +28,7 @@
                     <div class="col-sm-12 col-md-4 col-lg-3">
                         <div class="form-group">
                             <label>Customer Code</label>
-                            <input class="form-control" value="{{ $customer_code }}" name="customer_code" id="customer_code">
+                            <input class="form-control" value="{{ $customer_code }}" name="customer_code" id="customer_code" readonly>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4 col-lg-3">
@@ -88,14 +88,23 @@
                                             <td><input type="text" style="max-width: 70px;min-width: 70px;" class="form-control total_quantity" id="total_quantity" readonly></td>
                                             <td><input type="text" style="min-width: 130px;" class="form-control grand_total" id="grand_total" readonly></td>
                                         </tr>
-                                        <tr>
-                                            <td><b>Discount:</b></td>
-                                            <td><input type="text" class="form-control discount" id="discount"></td>
-                                            <td><b>Vat Amt:</b></td>
-                                            <td><input type="text" class="form-control vat" id="vat"></td>
-                                        </tr>
                                     </tfoot>
                                 </table>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="discount" class="form-label"><b>Discount</b></label>
+                                    <input type="text" class="form-control discount" id="discount">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="discount" class="form-label"><b>Vat Amt:</b></label>
+                                    <input type="text" class="form-control vat" id="vat">
+                                </div>
                             </div>
                         </div>
 
@@ -115,11 +124,11 @@
                             </div>
                             <div class="row col-md-12 mt-2">
                                 @foreach($products as $p)
-                                    <div class="col-sm-6 col-md-4" onclick="productAdd('{{ $p->id }}',1)">
+                                    <div class="col-sm-4 col-md-3 col-xl-3" onclick="productAdd('{{ $p->id }}',1)">
                                         <div class="card cart_card">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $p->name }}</h5>
-                                                <img src="{{asset('global_assets/images/foods.png')}}" height="100px" width="100px" alt="">
+                                                <img src="{{asset('global_assets/images/foods.png')}}" height="115px" width="115px" alt="">
                                                 <p class="card-text text-center">Tk {{ $p->price }}</p>
                                             </div>
                                         </div>

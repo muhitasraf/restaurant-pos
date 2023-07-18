@@ -381,4 +381,37 @@ class SalesController extends Controller
         DB::table('user_carts')->where('user_id','=',$user_id)->delete();
         return response()->json('ok');
     }
+
+    public function daily_sales(){
+        $title = "Daily Sales";
+        return view('reports.daily_sales',compact('title'));
+    }
+
+    public function daily_sales_result(Request $request){
+        $title = "Daily Sales";
+        $from_date = $request->from_date;
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales_detail s
+                LEFT JOIN products p on p.id = s.product_id
+                WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$from_date 23:59:59' GROUP BY s.product_id, p.name";
+        $daily_sales = DB::select($sql);
+
+        return view('reports.daily_sales',compact('title','daily_sales'));
+    }
+
+    public function monthly_sales(){
+        $title = "Monthly Sales";
+        return view('reports.monthly_sales',compact('title'));
+    }
+
+    public function monthly_sales_result(Request $request){
+        $title = "Daily Sales";
+        $to_date = $request->to_date;
+        $from_date = $request->from_date;
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales_detail s
+                LEFT JOIN products p on p.id = s.product_id
+                WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$to_date 23:59:59' GROUP BY s.product_id, p.name";
+        $monthly_sales = DB::select($sql);
+        // dd($monthly_sales);
+        return view('reports.monthly_sales',compact('title','monthly_sales'));
+    }
 }

@@ -68,4 +68,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get("/expense/edit/{id}", [ExpenseController::class, 'edit']);
     Route::put("/expense/update/{id}", [ExpenseController::class, 'update']);
     Route::get("/expense/delete/{id}", [ExpenseController::class, 'destroy']);
+
+    Route::get("/daily_sales", [SalesController::class, 'daily_sales'])->middleware(['admin_level_access', 'account_validity']);
+    Route::post("/daily_sales_result", [SalesController::class, 'daily_sales_result'])->middleware(['admin_level_access', 'account_validity']);
+
+    Route::get("/monthly_sales", [SalesController::class, 'monthly_sales'])->middleware(['admin_level_access', 'account_validity']);
+    Route::post("/monthly_sales_result", [SalesController::class, 'monthly_sales_result'])->middleware(['admin_level_access', 'account_validity']);
 });
