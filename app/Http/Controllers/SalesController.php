@@ -162,7 +162,7 @@ class SalesController extends Controller
 
         $order_list = DB::select(
             DB::raw("SELECT t2.name AS product_name, t1.invoice_id, t1.product_id,
-                    t1.quantity FROM `sales_detail` AS t1
+                    t1.quantity FROM `sales` AS t1
                     LEFT JOIN
                     products AS t2
                     ON t1.product_id=t2.id
@@ -196,7 +196,7 @@ class SalesController extends Controller
 
             $order_list = DB::select(
                 DB::raw("SELECT t2.name AS product_name, t1.invoice_id, t1.product_id,
-                        t1.quantity, t1.price FROM `sales_detail` AS t1
+                        t1.quantity, t1.price FROM `sales` AS t1
                         LEFT JOIN
                         products AS t2
                         ON t1.product_id=t2.id
@@ -227,8 +227,8 @@ class SalesController extends Controller
 
             $customer_info = Customer::find($sales_summary->customer_id);
 
-            $sales_detail = DB::select("SELECT t2.name AS product_name, t1.invoice_id, t1.product_id,
-                                    t1.quantity, t1.price FROM `sales_detail` AS t1
+            $sales = DB::select("SELECT t2.name AS product_name, t1.invoice_id, t1.product_id,
+                                    t1.quantity, t1.price FROM `sales` AS t1
                                     LEFT JOIN
                                     products AS t2
                                     ON t1.product_id=t2.id
@@ -236,7 +236,7 @@ class SalesController extends Controller
 
             $prod_array = [];
 
-            foreach($sales_detail as $sd){
+            foreach($sales as $sd){
                 array_push($prod_array, $sd->product_id);
             }
 
@@ -245,7 +245,7 @@ class SalesController extends Controller
                         ->where('status', 1)
                         ->get();
 
-            return view('edit_sale_product', ['products' => $products, 'tables' => $tables, 'sales_summary'=>$sales_summary, 'sales_detail'=>$sales_detail, 'customer_info'=>$customer_info, 'title' => $title]);
+            return view('edit_sale_product', ['products' => $products, 'tables' => $tables, 'sales_summary'=>$sales_summary, 'sales'=>$sales, 'customer_info'=>$customer_info, 'title' => $title]);
 
         }elseif($sales_summary->status == 1){
             echo '<div style="text-align: center;">';
@@ -321,7 +321,7 @@ class SalesController extends Controller
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
 
-        DB::table('sales_detail')->where('invoice_id', '=', $invoice_id)->delete();
+        DB::table('sales')->where('invoice_id', '=', $invoice_id)->delete();
 
         foreach($product_id_array as $k => $v){
 
@@ -334,7 +334,7 @@ class SalesController extends Controller
                 'updated_at' => date('Y-m-d H:i:s'),
             );
 
-            DB::table('sales_detail')->insert($data);
+            DB::table('sales')->insert($data);
 
         }
 
@@ -390,7 +390,7 @@ class SalesController extends Controller
     public function daily_sales_result(Request $request){
         $title = "Daily Sales";
         $from_date = $request->from_date;
-        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales_detail s
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales s
                 LEFT JOIN products p on p.id = s.product_id
                 WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$from_date 23:59:59' GROUP BY s.product_id, p.name";
         $daily_sales = DB::select($sql);
@@ -407,11 +407,72 @@ class SalesController extends Controller
         $title = "Daily Sales";
         $to_date = $request->to_date;
         $from_date = $request->from_date;
-        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales_detail s
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales s
                 LEFT JOIN products p on p.id = s.product_id
                 WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$to_date 23:59:59' GROUP BY s.product_id, p.name";
         $monthly_sales = DB::select($sql);
         // dd($monthly_sales);
+        return view('reports.monthly_sales',compact('title','monthly_sales'));
+    }
+
+    public function daily_expense(){
+        $title = "Daily Expenses";
+        return view('reports.daily_expense',compact('title'));
+    }
+
+    public function daily_expense_result(Request $request){
+        $title = "Daily Expenses";
+        $from_date = $request->from_date;
+        $sql = "SELECT expenditures, description, date, expense, user_id, updated_at, created_at FROM expenses
+                WHERE date BETWEEN '$from_date' AND '$from_date' GROUP BY expenditures";
+        $daily_expense = DB::select($sql);
+        return view('reports.daily_expense',compact('title','daily_expense'));
+    }
+
+    public function monthly_expense(){
+        $title = "Monthly Profit";
+        return view('reports.monthly_expense',compact('title'));
+    }
+
+    public function monthly_expense_result(Request $request){
+        $title = "Monthly Profit";
+        $to_date = $request->to_date;
+        $from_date = $request->from_date;
+        $sql = "SELECT expenditures, description, date, expense, user_id, parent_id, updated_at, created_at FROM expenses
+                 WHERE date BETWEEN '$from_date' AND '$to_date' GROUP BY expenditures";
+        $monthly_expense = DB::select($sql);
+        return view('reports.monthly_expense',compact('title','monthly_expense'));
+    }
+
+    public function daily_profit(){
+        $title = "Daily Profit";
+        return view('reports.daily_sales',compact('title'));
+    }
+
+    public function daily_profit_result(Request $request){
+        $title = "Daily Profit";
+        $from_date = $request->from_date;
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales s
+                LEFT JOIN products p on p.id = s.product_id
+                WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$from_date 23:59:59' GROUP BY s.product_id, p.name";
+        $daily_sales = DB::select($sql);
+
+        return view('reports.daily_sales',compact('title','daily_sales'));
+    }
+
+    public function monthly_profit(){
+        $title = "Monthly Profit";
+        return view('reports.monthly_sales',compact('title'));
+    }
+
+    public function monthly_profit_result(Request $request){
+        $title = "Monthly Profit";
+        $to_date = $request->to_date;
+        $from_date = $request->from_date;
+        $sql = "SELECT s.product_id, p.name AS product_name, SUM(s.quantity) AS quantity, SUM(s.price) price FROM sales s
+                LEFT JOIN products p on p.id = s.product_id
+                WHERE s.created_at BETWEEN '$from_date 00:00:00' AND '$to_date 23:59:59' GROUP BY s.product_id, p.name";
+        $monthly_sales = DB::select($sql);
         return view('reports.monthly_sales',compact('title','monthly_sales'));
     }
 }

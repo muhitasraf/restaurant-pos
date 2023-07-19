@@ -69,9 +69,21 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put("/expense/update/{id}", [ExpenseController::class, 'update']);
     Route::get("/expense/delete/{id}", [ExpenseController::class, 'destroy']);
 
-    Route::get("/daily_sales", [SalesController::class, 'daily_sales'])->middleware(['admin_level_access', 'account_validity']);
-    Route::post("/daily_sales_result", [SalesController::class, 'daily_sales_result'])->middleware(['admin_level_access', 'account_validity']);
+    Route::get("/daily_sales", [SalesController::class, 'daily_sales']);
+    Route::post("/daily_sales_result", [SalesController::class, 'daily_sales_result']);
 
-    Route::get("/monthly_sales", [SalesController::class, 'monthly_sales'])->middleware(['admin_level_access', 'account_validity']);
-    Route::post("/monthly_sales_result", [SalesController::class, 'monthly_sales_result'])->middleware(['admin_level_access', 'account_validity']);
+    Route::get("/monthly_sales", [SalesController::class, 'monthly_sales']);
+    Route::post("/monthly_sales_result", [SalesController::class, 'monthly_sales_result']);
+
+    Route::get("/daily_expense", [SalesController::class, 'daily_expense']);
+    Route::post("/daily_expense_result", [SalesController::class, 'daily_expense_result']);
+
+    Route::get("/monthly_expense", [SalesController::class, 'monthly_expense']);
+    Route::post("/monthly_expense_result", [SalesController::class, 'monthly_expense_result']);
+
+    Route::get("/daily_profit", [SalesController::class, 'daily_profit']);
+    Route::post("/daily_profit_result", [SalesController::class, 'daily_profit_result']);
+
+    Route::get("/monthly_profit", [SalesController::class, 'monthly_profit']);
+    Route::post("/monthly_profit_result", [SalesController::class, 'monthly_profit_result']);
 });

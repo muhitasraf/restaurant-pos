@@ -80,8 +80,12 @@
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="ph-layout"></i> <span>Report</span></a>
                         <ul class="nav-group-sub collapse">
-                            <li class="nav-item"><a href="{{ URL('expense/create') }}" class="nav-item nav-link">Create</a></li>
-                            <li class="nav-item"><a href="{{ URL('expenses') }}" class="nav-item nav-link">List</a></li>
+                            <li class="nav-item"><a href="{{ URL('daily_sales') }}" class="nav-item nav-link">Daily Sales</a></li>
+                            <li class="nav-item"><a href="{{ URL('monthly_sales') }}" class="nav-item nav-link">Monthly Sales</a></li>
+                            <li class="nav-item"><a href="{{ URL('daily_expense') }}" class="nav-item nav-link">Daily Expense</a></li>
+                            <li class="nav-item"><a href="{{ URL('monthly_expenses') }}" class="nav-item nav-link">Monthly Expense</a></li>
+                            <li class="nav-item"><a href="{{ URL('daily_profit') }}" class="nav-item nav-link">Daily Profit</a></li>
+                            <li class="nav-item"><a href="{{ URL('monthly_profit') }}" class="nav-item nav-link">Monthly Profit</a></li>
                         </ul>
                     </li>
                     <!-- /layout -->
